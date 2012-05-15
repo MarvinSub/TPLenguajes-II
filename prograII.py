@@ -35,8 +35,8 @@ def verif_otra(a):
 		else:
 			print"Favor elija SI o NO"
 
-def realizar_consulta(Nombre, Genero, Raza, Ecosistema, Comida, lista_param, lista_var2):
-	q = Query(animal(Nombre, Genero, Raza, Ecosistema, Comida), module=animal_modulo)
+def realizar_consulta(Nombre, Genero, Raza, Edad, Ecosistema, Comida, lista_param, lista_var2):
+	q = Query(animal(Nombre, Genero, Raza, Edad, Ecosistema, Comida), module=animal_modulo)
 	cont=0#indica si hubieron resultados de la consulta, cont=0 indica que no hubo resultados, cont>0 lo contrario.
 	o=0#lleva el indice de la lista_var2
 	while q.nextSolution():
@@ -64,12 +64,12 @@ print "Bienvenido a ZooSystem\n"
 validacion=0
 
 assertz = Functor("assertz")
-animal = Functor("animal", 5)
+animal = Functor("animal", 6)
 animal_modulo = newModule("animal_modulo")
 
-call(assertz(animal("LUNA", "HEMBRA", "PERRO", "CASA", "EUKA")), module=animal_modulo)
-call(assertz(animal("NALA", "HEMBRA", "PERRO", "CASA", "HUESO")), module=animal_modulo)
-call(assertz(animal("SPYKE", "MACHO", "PERRO", "CALLE", "SUPER PERRO")), module=animal_modulo)
+call(assertz(animal("LUNA", "HEMBRA", "PERRO", "8", "CASA", "EUKA")), module=animal_modulo)
+call(assertz(animal("NALA", "HEMBRA", "PERRO", "6", "CASA", "HUESO")), module=animal_modulo)
+call(assertz(animal("SPYKE", "MACHO", "PERRO", "2", "CALLE", "SUPER PERRO")), module=animal_modulo)
 
 while validacion==0:
 
@@ -101,6 +101,10 @@ while validacion==0:
 				Raza=Variable()
 				lista_var.append(Raza)
 				lista_var2.append("Raza: ")
+				
+				Edad=Variable()
+				lista_var.append(Edad)
+				lista_var2.append("Edad: ")
 
 				Ecosistema=Variable()
 				lista_var.append(Ecosistema)
@@ -110,7 +114,7 @@ while validacion==0:
 				lista_var.append(Comida)
 				lista_var2.append("Comida favorita: ")			
 
-				realizar_consulta(Nombre, Genero, Raza, Ecosistema, Comida, lista_param, lista_var2) 
+				realizar_consulta(Nombre, Genero, Raza, Edad, Ecosistema, Comida, lista_param, lista_var2) 
 				otra_con=verif_otra(1)
 			elif completa=="a" or completa=="A":
 				ind_gen=0
@@ -159,6 +163,15 @@ while validacion==0:
 					Raza=upper(raza)
 					lista_param.append("Raza: "+str(Raza))
 
+				edad=raw_input("Edad: ")
+				if edad=="":
+					Edad=Variables()
+					lista_var.append(Edad)
+					lista_var2.append("Edad: ")
+				else:
+					Edad=upper(edad)
+					lista_param.append("Raza: "+ str(Edad))
+
 				ecosistema=raw_input ("Ecosistema: ")
 				if ecosistema=="":
 					Ecosistema=Variable()
@@ -183,7 +196,7 @@ while validacion==0:
 				for i in lista_param:
 					print i
 				print "\nLos resultados de la consulta son: \n"
-				realizar_consulta(Nombre, Genero, Raza, Ecosistema, Comida, lista_param, lista_var2) 	
+				realizar_consulta(Nombre, Genero, Raza, Edad, Ecosistema, Comida, lista_param, lista_var2) 	
 				otra_con=verif_otra(1)
 			else:
 				print "Digite una opcion valida\n"
@@ -221,6 +234,15 @@ while validacion==0:
 					print "Favor ingrese una raza valida"
 				else:
 					ind_gen=1
+			
+			ind_gen=0
+			while ind_gen==0:
+				edad_reg=raw_input("Edad: ")
+				if edad_reg=="" or edad_reg==" ":
+					print "Favor ingrese una edad valida"
+				else:
+					ind_gen=1
+				
 			ind_gen=0
 			while ind_gen==0:			
 				eco_reg=raw_input ("Ecosistema: ")
@@ -237,10 +259,10 @@ while validacion==0:
 					ind_gen=1			
 
 			#crea el nuevo hecho en la base de conocimiento de prolog
-			call(assertz(animal(upper(nombre_reg), upper(genero_reg), upper(raza_reg), upper(eco_reg), upper(comida_reg))), 			module=animal_modulo)
+			call(assertz(animal(upper(nombre_reg), upper(genero_reg), upper(raza_reg), upper(edad_reg), upper(eco_reg), upper(comida_reg))), 			module=animal_modulo)
 
 			print "\nHa registrado un animal en zoologico con las siguientes caracteristicas:\n"
-			print "Nombre: "+str(nombre_reg)+"\ngenero: "+str(genero_reg)+"\nRaza: "+str(raza_reg)+"\nEcosistema: "+str	(eco_reg)+"\nComida favorita: "+str(comida_reg)
+			print "Nombre: "+str(nombre_reg)+"\ngenero: "+str(genero_reg)+"\nRaza: "+str(raza_reg)+"\nEdad: "+str(edad_reg)+"\nEcosistema: "+str	(eco_reg)+"\nComida favorita: "+str(comida_reg)
 
 			reg_otro=verif_otra(2)
 
