@@ -1,4 +1,8 @@
 #Programa escrito en Python 2.5, para ejecutarlo se debe tener esta distribucion
+#Elaborado por: Erick Monge Angulo
+#		Rafael Oliver Murillo
+#		Marvin Suarez Benson		
+
 
 from pyswip import *
 #from Tkinter import *
@@ -165,7 +169,7 @@ while validacion==0:
 
 				edad=raw_input("Edad: ")
 				if edad=="":
-					Edad=Variables()
+					Edad=Variable()
 					lista_var.append(Edad)
 					lista_var2.append("Edad: ")
 				else:
