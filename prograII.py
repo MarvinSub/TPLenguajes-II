@@ -1,16 +1,15 @@
-#Programa escrito en Python 2.5, para ejecutarlo se debe tener esta distribucion
+#Programa escrito en Python 2.5
 #Elaborado por: Erick Monge Angulo
 #		Rafael Oliver Murillo
 #		Marvin Suarez Benson		
 
 
-from pyswip import *
-#from Tkinter import *
+from pyswip import * #Se importa la libreria pyswip que permitirá la interconexión
 from string import upper
 
-p = Prolog()
+p = Prolog() #variable utilizada para hacer las consultas de prolog
 
-def salir():
+def salir():  # para salir del programa
 
 	while True:
 		salir=raw_input("Desea hacer otra operacion[S/N]: ")
@@ -40,23 +39,23 @@ def verif_otra(a):
 			print"Favor elija SI o NO"
 
 def realizar_consulta(Nombre, Genero, Raza, Edad, Ecosistema, Comida, lista_param, lista_var2):
-	q = Query(animal(Nombre, Genero, Raza, Edad, Ecosistema, Comida), module=animal_modulo)
+	q = Query(animal(Nombre, Genero, Raza, Edad, Ecosistema, Comida), module=animal_modulo) #realiza la consulta a la base de conocimientos
 	cont=0#indica si hubieron resultados de la consulta, cont=0 indica que no hubo resultados, cont>0 lo contrario.
 	o=0#lleva el indice de la lista_var2
 	while q.nextSolution():
 
 		cont+=1
-		for e in lista_param:
+		for e in lista_param: #imprime la lista de los parametros del animal
 			print e
 
 		for i in lista_var:				
-			print lista_var2[o]+str(i.value)
-			o+=1
+			print lista_var2[o]+str(i.value) #imprime los resultados de los animales encontrados 
+			o+=1 #para verificar si obtuvo resultados
 		o=0
 		print"\n"
 	if cont==0:
 		print "Su busqueda no obtuvo resultados, pruebe con otras caracteristicas"
-	q.closeQuery()
+	q.closeQuery() #se cierra la consulta
 
 
 
@@ -65,15 +64,15 @@ def realizar_consulta(Nombre, Genero, Raza, Edad, Ecosistema, Comida, lista_para
 print "Bienvenido a ZooSystem\n"
 
 
-validacion=0
+validacion=0 #valida hasta que se cierre el programa 
 
 assertz = Functor("assertz")
-animal = Functor("animal", 6)
+animal = Functor("animal", 6) #functor de las caracteristicas de los animales
 animal_modulo = newModule("animal_modulo")
 
+#ejemlos estaticos para la realización de consultas
 call(assertz(animal("LUNA", "HEMBRA", "PERRO", "8", "CASA", "EUKA")), module=animal_modulo)
 call(assertz(animal("NALA", "HEMBRA", "PERRO", "6", "CASA", "HUESO")), module=animal_modulo)
-call(assertz(animal("SPYKE", "MACHO", "PERRO", "2", "CALLE", "SUPER PERRO")), module=animal_modulo)
 
 while validacion==0:
 
@@ -85,13 +84,14 @@ while validacion==0:
 
 		print "\n\nBienvenido al sistema de consultas\n\n"
 		
-		while otra_con==0:
+		while otra_con==0: #ciclo del modo consulta
 			lista_var=[]#contiene las variables que no se especificaron y se usaran en prolog
 			lista_var2=[]#contiene el nombre del campo que repesenta cada variable
 			lista_param=[]#contiene la informacion que brindo el usuario en la consulta
 			
 			completa=raw_input("Que tipo de consulta desea hacer: \n\na.Por parametros\nb.Total\nIndique la opcion: ")
 			print ""
+			#imprime todos los animeales
 			if completa=="b" or completa=="B":
 				print "Animales Actualmente registrados en el zoologico.\n"
 				Nombre=Variable()
@@ -121,6 +121,7 @@ while validacion==0:
 				realizar_consulta(Nombre, Genero, Raza, Edad, Ecosistema, Comida, lista_param, lista_var2) 
 				otra_con=verif_otra(1)
 			elif completa=="a" or completa=="A":
+				#de entrada las caractristicas de los animales y de salida los animales encontrados
 				ind_gen=0
 				print "Indique las caracteristicas del animal que desea indentificar:\n *Recuerde que si no conoce una caracteristica simplemente la deja en blanco\n"
 
@@ -206,10 +207,10 @@ while validacion==0:
 				print "Digite una opcion valida\n"
 		validacion = salir()
 
-	elif eleccion=="B":
+	elif eleccion=="B": #modo mantenimiento
 		reg_otro=0
 		print "\n\nBienvenido al sistema de mantenimiento\n\n"
-		while reg_otro==0:
+		while reg_otro==0: #para el ingreso de los datos de los animales
 			print "\nIndique los datos del nuevo animal por registrar\n"
 			ind_gen=0
 			while ind_gen==0:			
@@ -272,10 +273,10 @@ while validacion==0:
 
 			
 
-		validacion=salir()
+		validacion=salir() #valida si se desea salir
 				
 	elif eleccion=="C":
-		exit()
+		exit()  #se sale del programa
 
 	else:
 		print "Favor indique A, B o C\n"
